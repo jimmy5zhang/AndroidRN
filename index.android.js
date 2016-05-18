@@ -5,119 +5,93 @@
 
 import React, { Component } from 'react';
 
-import {
-  AppRegistry,
-  Image,
-  Animated,
-  LayoutAnimation,
-  InteractionManager,
-  Navigator,
-  DrawerLayoutAndroid,
-  BackAndroid,
-  Picker,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+var MOCKED_MOVIES_DATA = [
+  {title: 'Title', year: '2015', posters: {thumbnail: 'http://i.imgur.com/UePbdph.jpg'}},
+];
 
-var ToastAndroid = require('./ToastAndroid')
+var API_KEY = '7waqfqbprs7pajbz28mqf6vz';
+var API_URL = 'http://api.rottentomatoes.com/api/public/v1.0/lists/movies/in_theaters.json';
+var PAGE_SIZE = 25;
+var PARAMS = '?apikey=' + API_KEY + '&page_limit=' + PAGE_SIZE;
+var REQUEST_URL = API_URL + PARAMS;
+
+import {
+    AppRegistry,
+    Image,
+    StyleSheet,
+    ListView,
+    Text,
+    View
+} from 'react-native';
 
 class android_rn extends Component {
 
-  configureScene(route){
-    return Navigator.SceneConfigs.FadeAndroid;
-  }
-
-  renderScene(router, navigator){
-    var Component = null;this._navigator = navigator;
-    switch(router.name){
-      case "welcome":
-        Component = WelcomeView;
-        break;
-      case "feed":
-        Component = FeedView;
-        break;
-      default: //default view
-        Component = DefaultView;
-    }
-
-    return <Component navigator={navigator} />
+  constructor(props) {
+    super(props);
+    this.state = {
+      dataSource: new ListView.DataSource({
+        rowHasChanged: (row1, row2) => row1 !== row2,
+      }),
+      loaded: false,
+    };
   }
 
   componentDidMount() {
-    var navigator = this._navigator;
-    BackAndroid.addEventListener('hardwareBackPress', function() {
-      if (navigator && navigator.getCurrentRoutes().length > 1) {
-        navigator.pop();
-        return true;
-      }
-      return false;
-    });
+    this.fetchData();
   }
 
-
-  componentWillUnmount() {
-    BackAndroid.removeEventListener('hardwareBackPress');
+  fetchData() {
+    fetch(REQUEST_URL)
+        .then((response) => response.json())
+        .then((responseData) => {
+          this.setState({
+            dataSource: this.state.dataSource.cloneWithRows(responseData.movies),
+            loaded: true,
+          });
+        })
+        .done();
   }
 
   render() {
+    if (!this.state.loaded) {
+      return this.renderLoadingView();
+    }
 
     return (
-        <Navigator
-            initialRoute={{name: 'welcome'}}
-            configureScene={this.configureScene}
-            renderScene={this.renderScene} />
+        <ListView
+            dataSource={this.state.dataSource}
+            renderRow={this.renderMovie}
+            style={styles.listView}
+            />
+    );
+  }
+
+  renderLoadingView() {
+    return (
+        <View style={styles.container}>
+          <Text>
+            Loading movies...
+          </Text>
+        </View>
+    );
+  }
+
+  renderMovie(movie) {
+    return (
+        <View style={styles.container}>
+          <Image
+              source={{uri: movie.posters.thumbnail}}
+              style={styles.thumbnail}
+              />
+          <View style={styles.rightContainer}>
+            <Text style={styles.title}>{movie.title}</Text>
+            <Text style={styles.year}>{movie.year}</Text>
+          </View>
+        </View>
     );
   }
 
 }
-
-var FeedView = React.createClass({
-  goBack(){
-    this.props.navigator.push({name:"default"});
-  },
-
-  render() {
-    return (
-        <View style={styles.container}>
-          <Text style={styles.welcome} onPress={this.goBack} >
-            I am Feed View! Tab to default view!
-          </Text>
-        </View>
-    )
-  }
-});
-
-
-var WelcomeView = React.createClass({
-  onPressFeed() {
-    this.props.navigator.push({name: 'feed'});
-  },
-
-
-  render() {
-    return (
-        <View style={styles.container}>
-          <Text style={styles.welcome} onPress={this.onPressFeed} >
-            This is welcome view.Tap to go to feed view.
-          </Text>
-        </View>
-    );
-  }
-
-});
-
-var DefaultView = React.createClass({
-
-  render(){
-    return (
-
-        <View style={styles.container}>
-          <Text style={styles.welcome}>Default view</Text>
-        </View>
-    )
-  }
-});
 
 var styles = StyleSheet.create({
   container: {
@@ -130,11 +104,10 @@ var styles = StyleSheet.create({
   rightContainer: {
     flex: 1,
   },
-  title:{
+  title: {
     fontSize: 20,
     marginBottom: 8,
     textAlign: 'center',
-    color:"red"
   },
   year: {
     textAlign: 'center',
