@@ -22,23 +22,29 @@ var ToastAndroid = require('./ToastAndroid')
 class android_rn extends Component {
 
   render() {
-    return (
-        <View>
-          <Image
-              style={styles.icon}
-              source={require('./images/ic_logo.png')}
-              style={{width: 200, height: 200}}
-              />
-          <Image
-              style={styles.logo}
-              source={{uri: 'http://facebook.github.io/react/img/logo_og.png'}}
-              style={{width: 200, height: 200}}
-              />
-        </View>
-    );
-  }
 
+    var navigationView = (
+        <View style={{flex: 1, backgroundColor: '#fff'}}>
+          <Text style={{margin: 10, fontSize: 15, textAlign: 'left'}}>I'm in the Drawer!</Text>
+        </View>
+    )
+
+
+    return (
+        <DrawerLayoutAndroid
+            drawerLockMode={'unlocked'}
+            drawerWidth={300}
+            drawerPosition={DrawerLayoutAndroid.positions.Right}
+            renderNavigationView={() => navigationView}>
+          <View style={{flex: 1, alignItems: 'center'}}>
+            <Text style={{margin: 10, fontSize: 15, textAlign: 'right'}}>Hello</Text>
+            <Text style={{margin: 10, fontSize: 15, textAlign: 'right'}}>World!</Text>
+          </View>
+        </DrawerLayoutAndroid>
+    )
+  }
 }
+
 
 var styles = StyleSheet.create({
   container: {

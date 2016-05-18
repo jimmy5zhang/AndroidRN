@@ -14,7 +14,6 @@ import {
   Navigator,
   DrawerLayoutAndroid,
   BackAndroid,
-  Picker,
   StyleSheet,
   Text,
   View
@@ -61,7 +60,6 @@ class android_rn extends Component {
   }
 
   render() {
-
     return (
         <Navigator
             initialRoute={{name: 'welcome'}}
@@ -111,7 +109,6 @@ var DefaultView = React.createClass({
 
   render(){
     return (
-
         <View style={styles.container}>
           <Text style={styles.welcome}>Default view</Text>
         </View>
