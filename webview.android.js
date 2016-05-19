@@ -23,19 +23,21 @@ import {
     TouchableHighlight,
     TouchableNativeFeedback,
     ViewPagerAndroid,
-    WebView,
-    Alert
+    WebView
 } from 'react-native';
-
-var alertMsg = "在飞机上主要安全，请勿靠近危险物品";
 
 class android_rn extends Component {
     render() {
-
         return (
-           <View>
-               <Text>你好</Text>
-            </View>
+             <WebView
+                  automaticallyAdjustContentInsets={false}
+                  style={styles.webView}
+                  source={{uri:"https://www.baidu.com/"}}
+                  javaScriptEnabled={true}
+                  domStorageEnabled={true}
+                  decelerationRate="normal"
+                  startInLoadingState={true}
+                 />
         );
     }
 }
@@ -100,14 +102,6 @@ var styles = StyleSheet.create({
     listView: {
         paddingTop: 20,
         backgroundColor: '#F5FCFF',
-    },
-    wrapper: {
-        borderRadius: 5,
-        marginBottom: 5,
-    },
-    button: {
-        backgroundColor: '#eeeeee',
-        padding: 10,
     },
 });
 

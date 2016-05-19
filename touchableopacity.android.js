@@ -21,21 +21,19 @@ import {
     View,
     ToolbarAndroid,
     TouchableHighlight,
-    TouchableNativeFeedback,
-    ViewPagerAndroid,
-    WebView,
-    Alert
+    TouchableNativeFeedback
 } from 'react-native';
-
-var alertMsg = "在飞机上主要安全，请勿靠近危险物品";
 
 class android_rn extends Component {
     render() {
-
         return (
-           <View>
-               <Text>你好</Text>
-            </View>
+            <TouchableNativeFeedback
+                onPress={this._onPressButton}
+                background={TouchableNativeFeedback.SelectableBackground()}>
+                <View style={{width: 150, height: 100, backgroundColor: 'red'}}>
+                    <Text style={{margin: 30}}>Button</Text>
+                </View>
+            </TouchableNativeFeedback>
         );
     }
 }
@@ -47,17 +45,6 @@ var styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#F5FCFF',
-    },
-    webView: {
-        backgroundColor: 'lightgray',
-        height: 350,
-    },
-    viewPager: {
-        flex: 1,
-    },
-    pageStyle: {
-        alignItems: 'center',
-        padding: 20,
     },
     toolbar: {
         backgroundColor: '#e9eaed',
@@ -100,14 +87,6 @@ var styles = StyleSheet.create({
     listView: {
         paddingTop: 20,
         backgroundColor: '#F5FCFF',
-    },
-    wrapper: {
-        borderRadius: 5,
-        marginBottom: 5,
-    },
-    button: {
-        backgroundColor: '#eeeeee',
-        padding: 10,
     },
 });
 

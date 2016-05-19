@@ -22,20 +22,25 @@ import {
     ToolbarAndroid,
     TouchableHighlight,
     TouchableNativeFeedback,
-    ViewPagerAndroid,
-    WebView,
-    Alert
+    ViewPagerAndroid
 } from 'react-native';
-
-var alertMsg = "在飞机上主要安全，请勿靠近危险物品";
 
 class android_rn extends Component {
     render() {
-
         return (
-           <View>
-               <Text>你好</Text>
-            </View>
+            <ViewPagerAndroid
+                style={styles.viewPager}
+                initialPage={0}>
+                <View style={styles.pageStyle}>
+                    <Text>First page</Text>
+                </View>
+                <View style={styles.pageStyle}>
+                    <Text>Second page</Text>
+                </View>
+                <View style={styles.pageStyle}>
+                    <Text>Third page</Text>
+                </View>
+            </ViewPagerAndroid>
         );
     }
 }
@@ -47,10 +52,6 @@ var styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#F5FCFF',
-    },
-    webView: {
-        backgroundColor: 'lightgray',
-        height: 350,
     },
     viewPager: {
         flex: 1,
@@ -100,14 +101,6 @@ var styles = StyleSheet.create({
     listView: {
         paddingTop: 20,
         backgroundColor: '#F5FCFF',
-    },
-    wrapper: {
-        borderRadius: 5,
-        marginBottom: 5,
-    },
-    button: {
-        backgroundColor: '#eeeeee',
-        padding: 10,
     },
 });
 

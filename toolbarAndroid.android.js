@@ -19,25 +19,30 @@ import {
     Slider,
     Text,
     View,
-    ToolbarAndroid,
-    TouchableHighlight,
-    TouchableNativeFeedback,
-    ViewPagerAndroid,
-    WebView,
-    Alert
+    ToolbarAndroid
 } from 'react-native';
 
-var alertMsg = "在飞机上主要安全，请勿靠近危险物品";
+var toolbarActions =[
+    {title: 'Create', icon:require('./images/ic_set.png'), show: 'always'},
+    {title: 'Filter'},
+    {title: 'Settings', icon:require('./images/ic_set.png'), show: 'always'},
+];
 
 class android_rn extends Component {
-    render() {
 
+    render() {
         return (
-           <View>
-               <Text>你好</Text>
-            </View>
+
+            <ToolbarAndroid
+                actions={toolbarActions}
+                navicon={require('./images/ic_logo.png')}
+                style={styles.toolbar}
+                subtitle="副标题"
+                title="主标题"></ToolbarAndroid>
+
         );
     }
+
 }
 
 var styles = StyleSheet.create({
@@ -47,17 +52,6 @@ var styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#F5FCFF',
-    },
-    webView: {
-        backgroundColor: 'lightgray',
-        height: 350,
-    },
-    viewPager: {
-        flex: 1,
-    },
-    pageStyle: {
-        alignItems: 'center',
-        padding: 20,
     },
     toolbar: {
         backgroundColor: '#e9eaed',
@@ -100,14 +94,6 @@ var styles = StyleSheet.create({
     listView: {
         paddingTop: 20,
         backgroundColor: '#F5FCFF',
-    },
-    wrapper: {
-        borderRadius: 5,
-        marginBottom: 5,
-    },
-    button: {
-        backgroundColor: '#eeeeee',
-        padding: 10,
     },
 });
 
